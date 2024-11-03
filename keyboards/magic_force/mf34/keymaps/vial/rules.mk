@@ -1,0 +1,4 @@
+VIA_ENABLE = yes
+VIAL_ENABLE = yes
+BOOTLOADER = apm32-dfu
+VIAL_INSECURE = yes

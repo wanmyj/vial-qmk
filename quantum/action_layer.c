@@ -6,6 +6,7 @@
 #include "encoder.h"
 #include "util.h"
 #include "action_layer.h"
+#include "debug.h"
 
 #ifdef VIAL_ENABLE
 #include "vial.h"
@@ -309,6 +310,7 @@ uint8_t read_source_layers_cache(keypos_t key) {
  * event as they may get stuck otherwise.
  */
 action_t store_or_get_action(bool pressed, keypos_t key) {
+    // printf(" enter store_or_get_action\n");
 #if !defined(NO_ACTION_LAYER) && !defined(STRICT_LAYER_RELEASE)
     if (disable_action_cache) {
         return layer_switch_get_action(key);
@@ -333,6 +335,7 @@ action_t store_or_get_action(bool pressed, keypos_t key) {
  * Gets the layer based on key info
  */
 uint8_t layer_switch_get_layer(keypos_t key) {
+    // printf(" enter layer_switch_get_layer\n");
 #ifndef NO_ACTION_LAYER
     action_t action;
     action.code = ACTION_TRANSPARENT;
@@ -359,6 +362,7 @@ uint8_t layer_switch_get_layer(keypos_t key) {
  * Gets action code based on key position
  */
 action_t layer_switch_get_action(keypos_t key) {
+    //printf("Enter layer_switch_get_action\n");
     return action_for_key(layer_switch_get_layer(key), key);
 }
 

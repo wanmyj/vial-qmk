@@ -15,6 +15,8 @@
  */
 #include "process_rgb.h"
 #include "action_util.h"
+#include "debug.h"
+#include "action_layer.h"
 
 #ifdef RGB_MATRIX_ENABLE
 #    include "rgb_matrix.h"
@@ -59,6 +61,7 @@ static void __attribute__((noinline, unused)) handleKeycodeRGBMode(const uint8_t
  * Handle keycodes for both rgblight and rgbmatrix
  */
 bool process_rgb(const uint16_t keycode, const keyrecord_t *record) {
+    // printf("enter process_rgb\n");
     // need to trigger on key-up for edge-case issue
 #ifndef RGB_TRIGGER_ON_KEYDOWN
     if (!record->event.pressed) {
@@ -78,6 +81,7 @@ bool process_rgb(const uint16_t keycode, const keyrecord_t *record) {
 #endif
                 return false;
             case QK_UNDERGLOW_MODE_NEXT:
+                // printf("printf QK_UNDERGLOW_MODE_NEXT\n");
 #if defined(RGBLIGHT_ENABLE) && !defined(RGBLIGHT_DISABLE_KEYCODES)
                 handleKeycodeRGB(shifted, rgblight_step, rgblight_step_reverse);
 #endif

@@ -232,6 +232,7 @@ uint16_t get_record_keycode(keyrecord_t *record, bool update_layer_cache) {
  * from triggering properly.
  */
 uint16_t get_event_keycode(keyevent_t event, bool update_layer_cache) {
+    // printf("Enter get_event_keycode\n");
 #if !defined(NO_ACTION_LAYER) && !defined(STRICT_LAYER_RELEASE)
     /* TODO: Use store_or_get_action() or a similar function. */
     if (!disable_action_cache) {

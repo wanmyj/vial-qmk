@@ -24,6 +24,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include "debug.h"
 #include "keycode_config.h"
 #include "quantum_keycodes.h"
+#include "rgb_matrix.h"
 
 #ifdef ENCODER_MAP_ENABLE
 #    include "encoder.h"
@@ -52,12 +53,14 @@ extern keymap_config_t keymap_config;
 /* converts key to action */
 action_t action_for_key(uint8_t layer, keypos_t key) {
     // 16bit keycodes - important
+    // printf("action_for_key layer: %x\n", layer);
     uint16_t keycode = keymap_key_to_keycode(layer, key);
     return action_for_keycode(keycode);
 };
 
 action_t action_for_keycode(uint16_t keycode) {
     // keycode remapping
+    // printf("enter action_for_keycode keycode: %d\n", keycode);
     keycode = keycode_config(keycode);
 
     action_t action = {};
@@ -95,6 +98,7 @@ action_t action_for_keycode(uint16_t keycode) {
 #endif                                                                                                    // LEGACY_MAGIC_HANDLING
             break;
         case QK_LAYER_TAP ... QK_LAYER_TAP_MAX:
+            // printf("QK_LAYER_TAP\n");
 #if !defined(NO_ACTION_LAYER) && !defined(NO_ACTION_TAPPING)
 #    ifdef LEGACY_MAGIC_HANDLING
             action.code = ACTION_LAYER_TAP_KEY(QK_LAYER_TAP_GET_LAYER(keycode), QK_LAYER_TAP_GET_TAP_KEYCODE(keycode));
@@ -115,6 +119,7 @@ action_t action_for_keycode(uint16_t keycode) {
             break;
         case QK_MOMENTARY ... QK_MOMENTARY_MAX:;
             // Momentary action_layer
+            // printf("QK_MOMENTARY\n");
             action_layer = QK_MOMENTARY_GET_LAYER(keycode);
             action.code  = ACTION_LAYER_MOMENTARY(action_layer);
             break;
@@ -125,6 +130,7 @@ action_t action_for_keycode(uint16_t keycode) {
             break;
         case QK_TOGGLE_LAYER ... QK_TOGGLE_LAYER_MAX:;
             // Set toggle
+            rgb_matrix_toggle();
             action_layer = QK_TOGGLE_LAYER_GET_LAYER(keycode);
             action.code  = ACTION_LAYER_TOGGLE(action_layer);
             break;
